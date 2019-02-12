@@ -79,18 +79,29 @@ class App extends Component {
     });
   }
 
-  // generateRandom(){
+  generateRandomString() {
+    const list = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let randomString = "";
+    let randomNumber = 0;
 
-  // }
+    for(let i = 0; i < 6; i++){
+      //62 characters * math.random between 0-1, math floor returns largest integer.
+      randomNumber = Math.floor(62 * Math.random());
+      randomString += list[randomNumber];
+    }
+    return randomString;
+  }
 
   getMessage(message){
     console.log('1', message);
     console.log(this.state.currentUser.name);
+    let randomId = this.generateRandomString();
 
     const newMessage = [{
       type: "incomingMessage",
       content: `${message}`,
-      username: `${this.state.currentUser.name}`
+      username: `${this.state.currentUser.name}`,
+      id: `${randomId}`
     }];
 
     const oldMessages = this.state.messages;
