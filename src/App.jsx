@@ -49,6 +49,22 @@ class App extends Component {
     this.getMessage = this.getMessage.bind(this);
   }
 
+  componentDidMount(){
+    console.log('componentDidMount <App />');
+
+    setTimeout(() => {
+      console.log('simulating incoming message');
+
+      const newMessage = {id: 3, username: 'Michelle', content: 'Hello There!', type: "incomingMessage"};
+      const messages = this.state.messages.concat(newMessage);
+
+      this.setState({messages:messages});
+    }, 3000);
+
+
+  }
+
+
   setUser(user){
     console.log(`${user}`);
     this.setState({currentUser: {name: `${user}`} }, () => {

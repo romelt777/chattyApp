@@ -6,7 +6,7 @@ class ChatBar extends Component{
       const content = document.getElementsByClassName('chatbar-message');
       console.log(content[0].value);
       if(event.key === 'Enter'){
-        alert(content[0].value);
+        // alert(content[0].value);
         this.props.getMessage(content[0].value);
         content[0].value = '';
       }
