@@ -58,6 +58,13 @@ class App extends Component {
 
   componentDidMount(){
     console.log('componentDidMount <App />');
+
+    const chattySocket = new WebSocket('ws:localhost:3001', ["protocolOne", "protocolTwo"]);
+    chattySocket.onopen = function(event) {
+      console.log(event);
+      console.log('Connected to server')
+    }
+
 //simulating loading a tweet.
     setTimeout(() => {
       console.log('simulating incoming message');
