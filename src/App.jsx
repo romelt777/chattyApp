@@ -11,35 +11,42 @@ class App extends Component {
       messages: [
         {
           type: "incomingMessage",
+          id: "888",
           content: "I won't be impressed with technology until I can download food.",
           username: "Anonymous1"
         },
         {
           type: "incomingNotification",
+          id: "889",
           content: "Anonymous1 changed their name to nomnom",
         },
         {
           type: "incomingMessage",
+          id: "890",
           content: "I wouldn't want to download Kraft Dinner. I'd be scared of cheese packet loss.",
           username: "Anonymous2"
         },
         {
           type: "incomingMessage",
+          id: "891",
           content: "...",
           username: "nomnom"
         },
         {
           type: "incomingMessage",
+          id: "892",
           content: "I'd love to download a fried egg, but I'm afraid encryption would scramble it",
           username: "Anonymous2"
         },
         {
           type: "incomingMessage",
+          id: "893",
           content: "This isn't funny. You're not funny",
           username: "nomnom"
         },
         {
           type: "incomingNotification",
+          id: "894",
           content: "Anonymous2 changed their name to NotFunny",
         },
       ]
@@ -71,6 +78,10 @@ class App extends Component {
       console.log(this.state);
     });
   }
+
+  // generateRandom(){
+
+  // }
 
   getMessage(message){
     console.log('1', message);
