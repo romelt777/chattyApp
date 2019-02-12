@@ -6,10 +6,7 @@ class MessageList extends Component{
     const messages = this.props.messages.map((message) => {
       if(message.type === 'incomingMessage'){
         return(
-          <div className="message">
-            <span className="message-username">{message.username}</span>
-            <span className="message-content">{message.content}</span>
-          </div>
+          <Message message={message} />
         );
       }
     });
@@ -18,7 +15,6 @@ class MessageList extends Component{
     return (
       <main className="messages">
           {messages}
-          <Message />
       </main>
 
     );

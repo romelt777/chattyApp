@@ -58,6 +58,22 @@ class App extends Component {
 
   getMessage(message){
     console.log('1', message);
+    console.log(this.state.currentUser.name);
+
+    const newMessage = [{
+      type: "incomingMessage",
+      content: `${message}`,
+      username: `${this.state.currentUser.name}`
+    }];
+
+    const oldMessages = this.state.messages;
+
+    Array.prototype.push.apply(oldMessages, newMessage);
+    console.log(oldMessages);
+    console.log(newMessage);
+
+    this.setState({messages: oldMessages})
+
   }
 
   render() {
