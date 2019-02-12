@@ -58,7 +58,7 @@ class App extends Component {
 
   componentDidMount(){
     console.log('componentDidMount <App />');
-
+//simulating loading a tweet.
     setTimeout(() => {
       console.log('simulating incoming message');
 
@@ -71,7 +71,7 @@ class App extends Component {
 
   }
 
-
+//dynamically sets the typed user to the State.
   setUser(user){
     console.log(`${user}`);
     this.setState({currentUser: {name: `${user}`} }, () => {
@@ -79,6 +79,7 @@ class App extends Component {
     });
   }
 
+//random string for the id of each  new message.
   generateRandomString() {
     const list = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let randomString = "";
@@ -92,11 +93,13 @@ class App extends Component {
     return randomString;
   }
 
+//method which is called after pressing enter. called by chatbar component.
   getMessage(message){
     console.log('1', message);
     console.log(this.state.currentUser.name);
     let randomId = this.generateRandomString();
 
+//creating new message object with newly inputed data. Created an array with an object.
     const newMessage = [{
       type: "incomingMessage",
       content: `${message}`,
@@ -106,10 +109,12 @@ class App extends Component {
 
     const oldMessages = this.state.messages;
 
+    //combining two arrays. old message and the new message.
     Array.prototype.push.apply(oldMessages, newMessage);
     console.log(oldMessages);
     console.log(newMessage);
 
+//set the new state with old messages plus the new one.
     this.setState({messages: oldMessages})
 
   }
