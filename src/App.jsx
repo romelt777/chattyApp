@@ -12,6 +12,7 @@ class App extends Component {
     }
 
     this.setUser = this.setUser.bind(this);
+    this.getMessage = this.getMessage.bind(this);
   }
 
   setUser(user){
@@ -21,11 +22,15 @@ class App extends Component {
     });
   }
 
+  getMessage(message){
+    console.log('1', message);
+  }
+
   render() {
     return (
       <div>
         <MessageList />
-        <ChatBar currentUser={this.state.currentUser} setUser={this.setUser}/>
+        <ChatBar currentUser={this.state.currentUser} setUser={this.setUser} getMessage={this.getMessage}/>
       </div>
     );
   }
