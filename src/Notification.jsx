@@ -5,8 +5,8 @@ class Notification extends Component{
     return (
       //using props from <MessageList /> to output content and username.
       <div className="message" >
-        <span className="message-username">{this.props.message.username}</span>
-        <span className="message-content">{this.props.message.content}</span>
+        <span className="message-username notification">{this.props.message.username}</span>
+        <span className="message-content notification">{this.props.message.content}</span>
       </div>
     );
   }
