@@ -13,6 +13,7 @@ class App extends Component {
       socket: {},
       messages: [],
       sentMessages: 0,
+      numberUsers: 0,
     }
 
     this.setUser = this.setUser.bind(this);
@@ -31,10 +32,14 @@ class App extends Component {
     this.setState({socket:chattySocket}, () => {
       //listening to data sent by server.
       this.state.socket.onmessage = (event) => {
+        //converting data type
+        const data = JSON.parse(event.data);
+
         //checking if incoming data from server is notification or message
-        if((JSON.parse(event.data))[0].type === 'incomingMessage' || (JSON.parse(event.data))[0].type === 'incomingNotification' ){
+        if(data[0].type === 'incomingMessage' || data[0].type === 'incomingNotification' ){
           this.getMessage(JSON.parse(event.data));
         } else {
+          // set.state({numberUsers:})
           console.log('yu', event.data);
         }
       }

@@ -39,9 +39,8 @@ wss.on('connection', (connection) => {
     });
   })
 
-//recieving message from client side.
+  //recieving message from client side.
   connection.on('message', ((message) => {
-
     const clientMessage = JSON.parse(message);
     if(clientMessage[0].type === 'postMessage'){
       console.log(clientMessage);
@@ -85,5 +84,17 @@ wss.on('connection', (connection) => {
 
 
 
-  connection.on('close', () => console.log('Client Disconnected'));
+  connection.on('close', () => {
+    console.log('Client Disconnected');
+    outgoingData = [{
+      content:(wss.clients).size,
+      type:'incomingUserData'
+    }]
+
+    wss.clients.forEach(function each(client) {
+      client.send(JSON.stringify(outgoingData),() => {
+        console.log('message sent to client');
+      });
+    })
+  });
 });
