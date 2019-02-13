@@ -17,6 +17,7 @@ const server = express()
 const wss = new SocketServer({server});
 
 let outgoingMessage = [];
+let stringNumber = '';
 
 
 // Set up a callback that will run when a client connects to the server
@@ -24,9 +25,17 @@ let outgoingMessage = [];
 // the ws parameter in the callback.
 wss.on('connection', (connection) => {
   console.log('Client Connected');
+  console.log((wss.clients).size);
+  stringNumber = ((wss.clients).size).toString();
+  wss.clients.forEach(function each(client) {
+    client.send(stringNumber,() => {
+      console.log('message sent to client');
+    });
+  })
 
 //recieving message from client side.
   connection.on('message', ((message) => {
+
     const clientMessage = JSON.parse(message);
     if(clientMessage[0].type === 'postMessage'){
       console.log(clientMessage);

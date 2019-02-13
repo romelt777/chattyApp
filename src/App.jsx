@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import Message from './Message.jsx';
 import MessageList from './MessageList.jsx';
+import Navbar from './Navbar.jsx';
 
 class App extends Component {
   constructor(props){
@@ -104,6 +105,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Navbar />
         <MessageList messages={this.state.messages}/>
         <ChatBar currentUser={this.state.currentUser} setUser={this.setUser} sendMessage={this.sendMessage}/>
       </div>
