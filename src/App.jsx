@@ -8,6 +8,7 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {name:'Anonymous'},
+      socket: {},
       messages: [
         {
           type: "incomingMessage",
@@ -58,25 +59,30 @@ class App extends Component {
 
   componentDidMount(){
     console.log('componentDidMount <App />');
-
+//connecting to websocket server (chattyserver)
     const chattySocket = new WebSocket('ws:localhost:3001', ["protocolOne", "protocolTwo"]);
     chattySocket.onopen = function(event) {
-      console.log(event);
-      console.log('Connected to server')
+      // console.log(event);
+      console.log('Connected to server');
     }
+    this.setState({socket:chattySocket}, () => {
+      console.log(this.state.socket);
+    });
+    // this.setState({socket:'chattySocket'});
+
+
+
 
 //simulating loading a tweet.
     setTimeout(() => {
       console.log('simulating incoming message');
-
       const newMessage = {id: 3, username: 'Michelle', content: 'Hello There!', type: "incomingMessage"};
       const messages = this.state.messages.concat(newMessage);
-
       this.setState({messages:messages});
     }, 3000);
-
-
   }
+
+
 
 //dynamically sets the typed user to the State.
   setUser(user){
