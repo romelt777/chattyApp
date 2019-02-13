@@ -55,13 +55,13 @@ class App extends Component {
     console.log('hey', message);
     const oldMessages = this.state.messages;
 
-  //   //combining two arrays. old message and the new message.
-  //   Array.prototype.push.apply(oldMessages, message);
-  //   console.log(oldMessages);
-  //   console.log(message);
+    //combining two arrays. old message and the new message.
+    Array.prototype.push.apply(oldMessages, message);
+    console.log(oldMessages);
+    console.log(message);
 
-  // //set the new state with old messages plus the new one.
-  //   this.setState({messages: oldMessages})
+  //set the new state with old messages plus the new one.
+    this.setState({messages: oldMessages})
 
   }
 
@@ -72,15 +72,15 @@ class App extends Component {
     // let randomId = this.generateRandomString();
 
 //creating new message object with newly inputed data. Created an array with an object.
-    // const newMessage = [{
-    //   type: "sendMessage",
-    //   content: `${message}`,
-    //   username: `${this.state.currentUser.name}`,
-    //   // id: `${randomId}`
-    // }];
+    const newMessage = [{
+      type: "sendMessage",
+      content: `${message}`,
+      username: `${this.state.currentUser.name}`,
+      // id: `${randomId}`
+    }];
 
     //sending message to websocket server .
-    const serverMessage = JSON.stringify(message);
+    const serverMessage = JSON.stringify(newMessage);
     console.log(this.state.socket);
     this.state.socket.send(serverMessage);
   }
