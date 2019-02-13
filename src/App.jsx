@@ -9,48 +9,7 @@ class App extends Component {
     this.state = {
       currentUser: {name:'Anonymous'},
       socket: {},
-      messages: [
-        {
-          type: "incomingMessage",
-          id: "888",
-          content: "I won't be impressed with technology until I can download food.",
-          username: "Anonymous1"
-        },
-        {
-          type: "incomingNotification",
-          id: "889",
-          content: "Anonymous1 changed their name to nomnom",
-        },
-        {
-          type: "incomingMessage",
-          id: "890",
-          content: "I wouldn't want to download Kraft Dinner. I'd be scared of cheese packet loss.",
-          username: "Anonymous2"
-        },
-        {
-          type: "incomingMessage",
-          id: "891",
-          content: "...",
-          username: "nomnom"
-        },
-        {
-          type: "incomingMessage",
-          id: "892",
-          content: "I'd love to download a fried egg, but I'm afraid encryption would scramble it",
-          username: "Anonymous2"
-        },
-        {
-          type: "incomingMessage",
-          id: "893",
-          content: "This isn't funny. You're not funny",
-          username: "nomnom"
-        },
-        {
-          type: "incomingNotification",
-          id: "894",
-          content: "Anonymous2 changed their name to NotFunny",
-        },
-      ]
+      messages: []
     }
 
     this.setUser = this.setUser.bind(this);
@@ -89,31 +48,31 @@ class App extends Component {
   }
 
 //random string for the id of each  new message.
-  generateRandomString() {
-    const list = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let randomString = "";
-    let randomNumber = 0;
+  // generateRandomString() {
+  //   const list = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  //   let randomString = "";
+  //   let randomNumber = 0;
 
-    for(let i = 0; i < 6; i++){
-      //62 characters * math.random between 0-1, math floor returns largest integer.
-      randomNumber = Math.floor(62 * Math.random());
-      randomString += list[randomNumber];
-    }
-    return randomString;
-  }
+  //   for(let i = 0; i < 6; i++){
+  //     //62 characters * math.random between 0-1, math floor returns largest integer.
+  //     randomNumber = Math.floor(62 * Math.random());
+  //     randomString += list[randomNumber];
+  //   }
+  //   return randomString;
+  // }
 
 //method which is called after pressing enter. called by chatbar component.
   getMessage(message){
     console.log('1', message);
     console.log(this.state.currentUser.name);
-    let randomId = this.generateRandomString();
+    // let randomId = this.generateRandomString();
 
 //creating new message object with newly inputed data. Created an array with an object.
     const newMessage = [{
-      type: "incomingMessage",
+      type: "sendMessage",
       content: `${message}`,
       username: `${this.state.currentUser.name}`,
-      id: `${randomId}`
+      // id: `${randomId}`
     }];
 
     const oldMessages = this.state.messages;
