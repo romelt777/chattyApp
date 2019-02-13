@@ -19,6 +19,7 @@ class App extends Component {
     this.setUser = this.setUser.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.getMessage = this.getMessage.bind(this);
+    this.checkUrl = this.checkUrl.bind(this);
   }
 
   componentDidMount(){
@@ -62,9 +63,23 @@ class App extends Component {
     });
   }
 
+  checkUrl(content){
+    const http = ['https://', 'http://'];
+    const type = ['.jpg', '.png', '.gif'];
+    if(content.includes(http[0] || http[1]) && content.includes(type[0] || type[1] || type[2])){
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
   getMessage(message){
     // console.log('hey', message);
     const oldMessages = this.state.messages;
+
+    const url = this.checkUrl(message[0].content);
+    console.log('test', url);
 
     //combining two arrays. old message and the new message.
     Array.prototype.push.apply(oldMessages, message);
