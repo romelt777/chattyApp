@@ -8,8 +8,10 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {name:'Anonymous'},
+      lastUser:{name:''},
       socket: {},
-      messages: []
+      messages: [],
+      sentMessages: 0,
     }
 
     this.setUser = this.setUser.bind(this);
@@ -45,14 +47,13 @@ class App extends Component {
 
   //dynamically sets the typed user to the State.
   setUser(user){
-    console.log(`${user}`);
     this.setState({currentUser: {name: `${user}`} }, () => {
       console.log(this.state);
     });
   }
 
   getMessage(message){
-    console.log('hey', message);
+    // console.log('hey', message);
     const oldMessages = this.state.messages;
 
     //combining two arrays. old message and the new message.
@@ -67,9 +68,11 @@ class App extends Component {
 
   //method which is called after pressing enter. called by chatbar component.
   sendMessage(message){
-    console.log('1', message);
+    console.log(this.state.lastUser.name);
     console.log(this.state.currentUser.name);
-    // let randomId = this.generateRandomString();
+    if((this.state.sentMessages) > 0 && !(this.state.currentUser.name === this.state.lastUser.name)){
+      console.log('not match!');
+    }
 
     //creating new message object with newly inputed data. Created an array with an object.
     const newMessage = [{
@@ -83,6 +86,13 @@ class App extends Component {
     const serverMessage = JSON.stringify(newMessage);
     console.log(this.state.socket);
     this.state.socket.send(serverMessage);
+
+    //keeping track of the last username used to sent a message .
+    const messageCount = (this.state.sentMessages + 1 );
+    console.log('count:', messageCount)
+    this.setState({lastUser: {name: `${this.state.currentUser.name}`}, sentMessages : messageCount}, () => {
+      console.log(this.state);
+    });
   }
 
   render() {

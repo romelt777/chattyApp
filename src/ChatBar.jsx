@@ -4,7 +4,6 @@ class ChatBar extends Component{
   render(){
     const submitMessage = event => {
       const content = document.getElementsByClassName('chatbar-message');
-      console.log(content[0].value);
       //checking if enter is pressed, then passes the data to function from parent component <APP/>
       //if enter is not pressed no data is being passed.
       if(event.key === 'Enter'){
