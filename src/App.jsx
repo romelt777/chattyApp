@@ -13,6 +13,7 @@ class App extends Component {
     }
 
     this.setUser = this.setUser.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
     this.getMessage = this.getMessage.bind(this);
   }
 
@@ -28,6 +29,7 @@ class App extends Component {
       //listening to messages sent by server.
       this.state.socket.onmessage = (event) => {
         console.log('where', JSON.parse(event.data));
+        this.getMessage(JSON.parse(event.data));
       }
     });
 
@@ -38,9 +40,7 @@ class App extends Component {
       const messages = this.state.messages.concat(newMessage);
       this.setState({messages:messages});
     }, 3000);
-  }
-
-
+  }//end of componentDidMount
 
 
 //dynamically sets the typed user to the State.
@@ -51,32 +51,36 @@ class App extends Component {
     });
   }
 
-//method which is called after pressing enter. called by chatbar component.
   getMessage(message){
+    console.log('hey', message);
+    const oldMessages = this.state.messages;
+
+  //   //combining two arrays. old message and the new message.
+  //   Array.prototype.push.apply(oldMessages, message);
+  //   console.log(oldMessages);
+  //   console.log(message);
+
+  // //set the new state with old messages plus the new one.
+  //   this.setState({messages: oldMessages})
+
+  }
+
+//method which is called after pressing enter. called by chatbar component.
+  sendMessage(message){
     console.log('1', message);
     console.log(this.state.currentUser.name);
     // let randomId = this.generateRandomString();
 
 //creating new message object with newly inputed data. Created an array with an object.
-    const newMessage = [{
-      type: "sendMessage",
-      content: `${message}`,
-      username: `${this.state.currentUser.name}`,
-      // id: `${randomId}`
-    }];
-
-    const oldMessages = this.state.messages;
-
-    //combining two arrays. old message and the new message.
-    Array.prototype.push.apply(oldMessages, newMessage);
-    console.log(oldMessages);
-    console.log(newMessage);
-
-//set the new state with old messages plus the new one.
-    this.setState({messages: oldMessages})
+    // const newMessage = [{
+    //   type: "sendMessage",
+    //   content: `${message}`,
+    //   username: `${this.state.currentUser.name}`,
+    //   // id: `${randomId}`
+    // }];
 
     //sending message to websocket server .
-    const serverMessage = JSON.stringify(newMessage);
+    const serverMessage = JSON.stringify(message);
     console.log(this.state.socket);
     this.state.socket.send(serverMessage);
   }
@@ -85,7 +89,7 @@ class App extends Component {
     return (
       <div>
         <MessageList messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser} setUser={this.setUser} getMessage={this.getMessage}/>
+        <ChatBar currentUser={this.state.currentUser} setUser={this.setUser} sendMessage={this.sendMessage}/>
       </div>
     );
   }

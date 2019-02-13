@@ -9,7 +9,7 @@ class ChatBar extends Component{
       //if enter is not pressed no data is being passed.
       if(event.key === 'Enter'){
         // alert(content[0].value);
-        this.props.getMessage(content[0].value);
+        this.props.sendMessage(content[0].value);
         content[0].value = '';
         //resets the content box to empty.
       }
