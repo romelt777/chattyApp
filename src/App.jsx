@@ -39,8 +39,8 @@ class App extends Component {
         if(data[0].type === 'incomingMessage' || data[0].type === 'incomingNotification' ){
           this.getMessage(JSON.parse(event.data));
         } else {
-          // set.state({numberUsers:})
-          console.log('yu', event.data);
+          this.setState({numberUsers: data[0].content});
+          console.log('yu', data[0].content);
         }
       }
     });
@@ -114,7 +114,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar numberUsers={this.state.numberUsers}/>
         <MessageList messages={this.state.messages}/>
         <ChatBar currentUser={this.state.currentUser} setUser={this.setUser} sendMessage={this.sendMessage}/>
       </div>
