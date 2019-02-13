@@ -31,8 +31,9 @@ class App extends Component {
     this.setState({socket:chattySocket}, () => {
       //listening to messages sent by server.
       this.state.socket.onmessage = (event) => {
-        console.log('where', JSON.parse(event.data));
-        this.getMessage(JSON.parse(event.data));
+        if((JSON.parse(event.data))[0].type === 'incomingMessage' || (JSON.parse(event.data))[0].type === 'incomingNotification' ){
+          this.getMessage(JSON.parse(event.data));
+        }
       }
     });
 
