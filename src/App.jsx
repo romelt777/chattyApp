@@ -72,6 +72,12 @@ class App extends Component {
     console.log(this.state.currentUser.name);
     if((this.state.sentMessages) > 0 && !(this.state.currentUser.name === this.state.lastUser.name)){
       console.log('not match!');
+
+      const newNotification = [{
+        type: "postNotification",
+        content: `${this.state.lastUser.name} has changed their name to ${this.state.currentUser.name}`,
+      }];
+      this.state.socket.send(JSON.stringify(newNotification));
     }
 
     //creating new message object with newly inputed data. Created an array with an object.
