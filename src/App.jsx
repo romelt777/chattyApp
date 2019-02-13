@@ -14,6 +14,7 @@ class App extends Component {
       messages: [],
       sentMessages: 0,
       numberUsers: 0,
+      image: false
     }
 
     this.setUser = this.setUser.bind(this);
@@ -63,23 +64,33 @@ class App extends Component {
     });
   }
 
-  checkUrl(content){
-    const http = ['https://', 'http://'];
-    const type = ['.jpg', '.png', '.gif'];
-    if(content.includes(http[0] || http[1]) && content.includes(type[0] || type[1] || type[2])){
-      return true;
-    } else {
-      return false;
-    }
+  checkUrl(content, callback){
+    //checks if content has a url included.
+    // const http = ['https://', 'http://'];
+    // const type = ['.jpg', '.png', '.gif'];
+    // if(content.includes(http[0] || http[1]) && content.includes(type[0] || type[1] || type[2])){
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    const image = new Image();
+    image.src = content;
+    image.onload = function() {callback(true)};
+    image.onerror = function() {callback(false)};
+
 
   }
+
+
 
   getMessage(message){
     // console.log('hey', message);
     const oldMessages = this.state.messages;
 
-    const url = this.checkUrl(message[0].content);
-    console.log('test', url);
+    this.checkUrl(message[0].content, function(exists) {
+      message[0]['image'] = exists;
+      console.log(message);
+    })
 
     //combining two arrays. old message and the new message.
     Array.prototype.push.apply(oldMessages, message);
