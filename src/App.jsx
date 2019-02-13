@@ -19,7 +19,7 @@ class App extends Component {
 
   componentDidMount(){
     console.log('componentDidMount <App />');
-//connecting to websocket server (chattyserver)
+    //connecting to websocket server (chattyserver)
     const chattySocket = new WebSocket('ws:localhost:3001', ["protocolOne", "protocolTwo"]);
     chattySocket.onopen = function(event) {
       // console.log(event);
@@ -33,17 +33,17 @@ class App extends Component {
       }
     });
 
-//simulating loading a tweet.
+    //simulating loading a tweet.
     setTimeout(() => {
       console.log('simulating incoming message');
-      const newMessage = {id: 3, username: 'Michelle', content: 'Hello There!', type: "serverMessage"};
+      const newMessage = {id: 3, username: 'Michelle', content: 'Hello There!', type: "incomingMessage"};
       const messages = this.state.messages.concat(newMessage);
       this.setState({messages:messages});
     }, 3000);
   }//end of componentDidMount
 
 
-//dynamically sets the typed user to the State.
+  //dynamically sets the typed user to the State.
   setUser(user){
     console.log(`${user}`);
     this.setState({currentUser: {name: `${user}`} }, () => {
@@ -60,20 +60,20 @@ class App extends Component {
     console.log(oldMessages);
     console.log(message);
 
-  //set the new state with old messages plus the new one.
+    //set the new state with old messages plus the new one.
     this.setState({messages: oldMessages})
 
   }
 
-//method which is called after pressing enter. called by chatbar component.
+  //method which is called after pressing enter. called by chatbar component.
   sendMessage(message){
     console.log('1', message);
     console.log(this.state.currentUser.name);
     // let randomId = this.generateRandomString();
 
-//creating new message object with newly inputed data. Created an array with an object.
+    //creating new message object with newly inputed data. Created an array with an object.
     const newMessage = [{
-      type: "sendMessage",
+      type: "postMessage",
       content: `${message}`,
       username: `${this.state.currentUser.name}`,
       // id: `${randomId}`
