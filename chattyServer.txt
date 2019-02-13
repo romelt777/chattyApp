@@ -16,6 +16,7 @@ const server = express()
 //creating websocket server
 const wss = new SocketServer({server});
 
+let outgoingMessage = [];
 
 
 // Set up a callback that will run when a client connects to the server
@@ -26,26 +27,44 @@ wss.on('connection', (connection) => {
 
 //recieving message from client side.
   connection.on('message', ((message) => {
-    // if(message.type === 'sendMessage'){
-      const clientMessage = JSON.parse(message);
+    const clientMessage = JSON.parse(message);
+    if(clientMessage[0].type === 'postMessage'){
       console.log(clientMessage);
       console.log(uuidv4());
 
       //setting new message to send to clients, given new ID using UUID and type is changed.
-      let outgoingMessage = [{
+      outgoingMessage = [{
         content:clientMessage[0].content,
         username:clientMessage[0].username,
         id: uuidv4(),
-        type:'serverMessage'
+        type:'incomingMessage'
       }]
       console.log('test', outgoingMessage);
 
-//websockets keeps track of clients connected automatically, sending message to all.
+      //websockets keeps track of clients connected automatically, sending message to all.
+      //why not work if outside?
       wss.clients.forEach(function each(client) {
         client.send(JSON.stringify(outgoingMessage),() => {
           console.log('message sent to client');
         });
       })
+    } else if(clientMessage[0].type === 'postNotification'){
+        outgoingMessage = [{
+          content:clientMessage[0].content,
+          username:'NOTIFICATION',
+          id: uuidv4(),
+          type:'incomingNotification'
+        }]
+
+        console.log('test', outgoingMessage);
+        wss.clients.forEach(function each(client) {
+          client.send(JSON.stringify(outgoingMessage),() => {
+            console.log('message sent to client');
+          });
+        })
+    }
+
+
 
   }));
 
