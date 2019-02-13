@@ -25,7 +25,10 @@ class App extends Component {
       console.log('Connected to server');
     }
     this.setState({socket:chattySocket}, () => {
-      console.log(this.state.socket);
+      //listening to messages sent by server.
+      this.state.socket.onmessage = (event) => {
+        console.log('where', JSON.parse(event.data));
+      }
     });
 
 //simulating loading a tweet.
@@ -39,6 +42,7 @@ class App extends Component {
 
 
 
+
 //dynamically sets the typed user to the State.
   setUser(user){
     console.log(`${user}`);
@@ -46,20 +50,6 @@ class App extends Component {
       console.log(this.state);
     });
   }
-
-//random string for the id of each  new message.
-  // generateRandomString() {
-  //   const list = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  //   let randomString = "";
-  //   let randomNumber = 0;
-
-  //   for(let i = 0; i < 6; i++){
-  //     //62 characters * math.random between 0-1, math floor returns largest integer.
-  //     randomNumber = Math.floor(62 * Math.random());
-  //     randomString += list[randomNumber];
-  //   }
-  //   return randomString;
-  // }
 
 //method which is called after pressing enter. called by chatbar component.
   getMessage(message){
@@ -84,7 +74,6 @@ class App extends Component {
 
 //set the new state with old messages plus the new one.
     this.setState({messages: oldMessages})
-
 
     //sending message to websocket server .
     const serverMessage = JSON.stringify(newMessage);
