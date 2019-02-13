@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Message from './Message.jsx';
+import Notification from './Notification.jsx';
 
 class MessageList extends Component{
   render(){
@@ -11,7 +12,12 @@ class MessageList extends Component{
           //setting the id to the key, keys are needed in React.
           <Message key={message.id} message={message} />
         );
-      }
+      } else if(message.type === 'incomingNotification'){
+        return(
+          //setting the id to the key, keys are needed in React.
+          <Notification key={message.id} message={message} />
+        );
+        }
     });
 
 
