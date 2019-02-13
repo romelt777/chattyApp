@@ -31,7 +31,7 @@ class App extends Component {
 //simulating loading a tweet.
     setTimeout(() => {
       console.log('simulating incoming message');
-      const newMessage = {id: 3, username: 'Michelle', content: 'Hello There!', type: "incomingMessage"};
+      const newMessage = {id: 3, username: 'Michelle', content: 'Hello There!', type: "serverMessage"};
       const messages = this.state.messages.concat(newMessage);
       this.setState({messages:messages});
     }, 3000);

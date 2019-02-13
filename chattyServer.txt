@@ -22,7 +22,21 @@ wss.on('connection', (ws) => {
   console.log('Client Connected');
 
   ws.on('message', ((message) => {
-    console.log(message);
+    // if(message.type === 'sendMessage'){
+      const clientMessage = JSON.parse(message);
+      console.log(clientMessage);
+      console.log(uuidv4());
+      let outgoingMessage = [{
+        content:clientMessage[0].content,
+        username:clientMessage[0].username,
+        id: uuidv4(),
+        type:'serverMessage'
+      }]
+
+      console.log('test', outgoingMessage);
+
+
+    // }
   }));
 
 
