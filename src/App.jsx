@@ -29,10 +29,13 @@ class App extends Component {
       console.log('Connected to server');
     }
     this.setState({socket:chattySocket}, () => {
-      //listening to messages sent by server.
+      //listening to data sent by server.
       this.state.socket.onmessage = (event) => {
+        //checking if incoming data from server is notification or message
         if((JSON.parse(event.data))[0].type === 'incomingMessage' || (JSON.parse(event.data))[0].type === 'incomingNotification' ){
           this.getMessage(JSON.parse(event.data));
+        } else {
+          console.log('yu', event.data);
         }
       }
     });

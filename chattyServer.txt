@@ -16,7 +16,7 @@ const server = express()
 //creating websocket server
 const wss = new SocketServer({server});
 
-let outgoingMessage = [];
+let outgoingData = [];
 let stringNumber = '';
 
 
@@ -25,10 +25,16 @@ let stringNumber = '';
 // the ws parameter in the callback.
 wss.on('connection', (connection) => {
   console.log('Client Connected');
-  console.log((wss.clients).size);
-  stringNumber = ((wss.clients).size).toString();
+  // console.log((wss.clients).size);
+  // stringNumber = ((wss.clients).size).toString();
+
+  outgoingData = [{
+    content:(wss.clients).size,
+    type:'incomingUserData'
+  }]
+
   wss.clients.forEach(function each(client) {
-    client.send(stringNumber,() => {
+    client.send(JSON.stringify(outgoingData),() => {
       console.log('message sent to client');
     });
   })
@@ -42,32 +48,32 @@ wss.on('connection', (connection) => {
       console.log(uuidv4());
 
       //setting new message to send to clients, given new ID using UUID and type is changed.
-      outgoingMessage = [{
+      outgoingData = [{
         content:clientMessage[0].content,
         username:clientMessage[0].username,
         id: uuidv4(),
         type:'incomingMessage'
       }]
-      console.log('test', outgoingMessage);
+      console.log('test', outgoingData);
 
       //websockets keeps track of clients connected automatically, sending message to all.
       //why not work if outside?
       wss.clients.forEach(function each(client) {
-        client.send(JSON.stringify(outgoingMessage),() => {
+        client.send(JSON.stringify(outgoingData),() => {
           console.log('message sent to client');
         });
       })
     } else if(clientMessage[0].type === 'postNotification'){
-        outgoingMessage = [{
+        outgoingData = [{
           content:clientMessage[0].content,
           username:'NOTIFICATION',
           id: uuidv4(),
           type:'incomingNotification'
         }]
 
-        console.log('test', outgoingMessage);
+        console.log('test', outgoingData);
         wss.clients.forEach(function each(client) {
-          client.send(JSON.stringify(outgoingMessage),() => {
+          client.send(JSON.stringify(outgoingData),() => {
             console.log('message sent to client');
           });
         })
