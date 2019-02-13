@@ -50,7 +50,7 @@ class App extends Component {
     //simulating loading a tweet.
     setTimeout(() => {
       console.log('simulating incoming message');
-      const newMessage = {id: 3, username: 'Michelle', content: 'Hello There!', type: "incomingMessage"};
+      const newMessage = {id: 3, username: 'Michelle', content: 'Hello There!', type: "incomingMessage", image:false};
       const messages = this.state.messages.concat(newMessage);
       this.setState({messages:messages});
     }, 3000);
@@ -64,41 +64,34 @@ class App extends Component {
     });
   }
 
+//
   checkUrl(content, callback){
-    //checks if content has a url included.
-    // const http = ['https://', 'http://'];
-    // const type = ['.jpg', '.png', '.gif'];
-    // if(content.includes(http[0] || http[1]) && content.includes(type[0] || type[1] || type[2])){
-    //   return true;
-    // } else {
-    //   return false;
-    // }
     const image = new Image();
-    image.src = content;
     image.onload = function() {callback(true)};
     image.onerror = function() {callback(false)};
-
+    image.src = content;
 
   }
-
-
 
   getMessage(message){
     // console.log('hey', message);
     const oldMessages = this.state.messages;
 
-    this.checkUrl(message[0].content, function(exists) {
-      message[0]['image'] = exists;
+    let urlExists = false;
+    this.checkUrl(message[0].content, (exists) => {
+      console.log('111', exists);
+      urlExists = exists;
       console.log(message);
+
+      message[0].image = urlExists;
+      //combining two arrays. old message and the new message.
+      Array.prototype.push.apply(oldMessages, message);
+      console.log(oldMessages);
+      console.log(message);
+
+      //set the new state with old messages plus the new one.
+      this.setState({messages: oldMessages})
     })
-
-    //combining two arrays. old message and the new message.
-    Array.prototype.push.apply(oldMessages, message);
-    console.log(oldMessages);
-    console.log(message);
-
-    //set the new state with old messages plus the new one.
-    this.setState({messages: oldMessages})
 
   }
 
