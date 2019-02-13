@@ -68,10 +68,6 @@ class App extends Component {
     this.setState({socket:chattySocket}, () => {
       console.log(this.state.socket);
     });
-    // this.setState({socket:'chattySocket'});
-
-
-
 
 //simulating loading a tweet.
     setTimeout(() => {
@@ -130,6 +126,11 @@ class App extends Component {
 //set the new state with old messages plus the new one.
     this.setState({messages: oldMessages})
 
+
+    //sending message to websocket server .
+    const serverMessage = JSON.stringify(newMessage);
+    console.log(this.state.socket);
+    this.state.socket.send(serverMessage);
   }
 
   render() {
