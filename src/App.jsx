@@ -110,8 +110,7 @@ class App extends Component {
 
     //updating the state of last username used to sent a message. also how many messages this client has sent.
     const messageCount = (this.state.sentMessages + 1 );
-    this.setState({lastUser: {name: `${this.state.currentUser.name}`}, sentMessages : messageCount}, () => {
-    });
+    this.setState({lastUser: {name: `${this.state.currentUser.name}`}, sentMessages : messageCount});
   }
   //sending props to child components. Navbar is receiving how many users logged in. Message list is receiving entire message array
   //chat bar is receiving the current user, and methods to call when messages are inputed.

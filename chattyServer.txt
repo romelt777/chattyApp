@@ -66,7 +66,7 @@ wss.on('connection', (connection) => {
 
         wss.clients.forEach(function each(client) {
           client.send(JSON.stringify(outgoingData),() => {
-            console.log('message sent to client');
+            console.log('notification sent to client');
           });
         })
       }
