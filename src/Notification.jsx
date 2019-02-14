@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 class Notification extends Component{
+  //using props from messageList component to display notification. username is always empty.
   render(){
     return (
       <div className="message" >

@@ -9,14 +9,13 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {name:'Anonymous'},
-      lastUser:{name:''},
+      lastUser:{name:''}, //the last user who sent a message using the this.socket (current user)
       socket: {},
       messages: [],
-      sentMessages: 0,
-      numberUsers: 0,
-      image: false
+      sentMessages: 0, //keeping track if this.socket has sent any messages
+      numberUsers: 0, //how many users online
     }
-
+    //binding functions to App conponent
     this.setUser = this.setUser.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.getMessage = this.getMessage.bind(this);
@@ -28,7 +27,6 @@ class App extends Component {
     //connecting to websocket server (chattyserver)
     const chattySocket = new WebSocket('ws:localhost:3001', ["protocolOne", "protocolTwo"]);
     chattySocket.onopen = function(event) {
-      // console.log(event);
       console.log('Connected to server');
     }
     this.setState({socket:chattySocket}, () => {
@@ -40,13 +38,11 @@ class App extends Component {
         //checking if incoming data from server is notification or message
         if(data[0].type === 'incomingMessage' || data[0].type === 'incomingNotification' ){
           this.getMessage(JSON.parse(event.data));
-        } else {
+        } else { //this is for receiving how many users online from the server .
           this.setState({numberUsers: data[0].content});
-          console.log('yu', data[0].content);
         }
       }
     });
-
     //simulating loading a tweet.
     setTimeout(() => {
       console.log('simulating incoming message');
@@ -56,52 +52,41 @@ class App extends Component {
     }, 3000);
   }//end of componentDidMount
 
-
-  //dynamically sets the typed user to the State.
+  //current user in the state, is changed on every key stroke. this is the method called by <ChatBar />
   setUser(user){
     this.setState({currentUser: {name: `${user}`} }, () => {
-      console.log(this.state);
     });
   }
 
-//
+  //checking whether entered url is an image/gif/jpeg ..etc.
   checkUrl(content, callback){
     const image = new Image();
-    image.onload = function() {callback(true)};
-    image.onerror = function() {callback(false)};
+    image.onload = function() {callback(true)};  //if image has finished loading, this callback is called, with true
+    image.onerror = function() {callback(false)}; //if error occurs when loading url this callback is called, with false
     image.src = content;
-
   }
 
   getMessage(message){
-    // console.log('hey', message);
-    const oldMessages = this.state.messages;
-
+    const oldMessages = this.state.messages; //previous array of messages/notifications
     let urlExists = false;
     this.checkUrl(message[0].content, (exists) => {
-      console.log('111', exists);
       urlExists = exists;
-      console.log(message);
+      message[0].image = urlExists; //setting whether the incoming message from server has a Url of image .
 
-      message[0].image = urlExists;
       //combining two arrays. old message and the new message.
       Array.prototype.push.apply(oldMessages, message);
-      console.log(oldMessages);
-      console.log(message);
 
       //set the new state with old messages plus the new one.
-      this.setState({messages: oldMessages})
+      this.setState({messages: oldMessages}) //old messages now contains previous messages plus the new message.
     })
-
   }
 
   //method which is called after pressing enter. called by chatbar component.
   sendMessage(message){
-    console.log(this.state.lastUser.name);
-    console.log(this.state.currentUser.name);
+    //checking whether the user of the last sent message is the same as the current user sending a message.
+    //also must check whether a user has sent a message, because the first username is null.
     if((this.state.sentMessages) > 0 && !(this.state.currentUser.name === this.state.lastUser.name)){
-      console.log('not match!');
-
+      //sending a notification to the server, that the current user has changed their name.
       const newNotification = [{
         type: "postNotification",
         content: `${this.state.lastUser.name} has changed their name to ${this.state.currentUser.name}`,
@@ -109,27 +94,24 @@ class App extends Component {
       this.state.socket.send(JSON.stringify(newNotification));
     }
 
-    //creating new message object with newly inputed data. Created an array with an object.
+    //creating new message array, with newly inputed data. Created an array with an object.
     const newMessage = [{
       type: "postMessage",
       content: `${message}`,
       username: `${this.state.currentUser.name}`,
-      // id: `${randomId}`
     }];
 
     //sending message to websocket server .
     const serverMessage = JSON.stringify(newMessage);
-    console.log(this.state.socket);
     this.state.socket.send(serverMessage);
 
-    //keeping track of the last username used to sent a message .
+    //updating the state of last username used to sent a message. also how many messages this client has sent.
     const messageCount = (this.state.sentMessages + 1 );
-    console.log('count:', messageCount)
     this.setState({lastUser: {name: `${this.state.currentUser.name}`}, sentMessages : messageCount}, () => {
-      console.log(this.state);
     });
   }
-
+  //sending props to child components. Navbar is receiving how many users logged in. Message list is receiving entire message array
+  //chat bar is receiving the current user, and methods to call when messages are inputed.
   render() {
     return (
       <div>
@@ -140,4 +122,5 @@ class App extends Component {
     );
   }
 }
+
 export default App;

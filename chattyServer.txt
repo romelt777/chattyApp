@@ -8,25 +8,22 @@ const PORT = 3001;
 
 //creating a new express server.
 const server = express()
-//express server serving static assets from the public folder.
+  //express server serving static assets from the public folder.
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on port ${ PORT }`));
 
-
 //creating websocket server
 const wss = new SocketServer({server});
-
+//global variable for outgoing data.
 let outgoingData = [];
-let stringNumber = '';
+
 
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
-// the ws parameter in the callback.
+// the connection parameter in the callback.
 wss.on('connection', (connection) => {
   console.log('Client Connected');
-  // console.log((wss.clients).size);
-  // stringNumber = ((wss.clients).size).toString();
 
   outgoingData = [{
     content:(wss.clients).size,
@@ -42,10 +39,8 @@ wss.on('connection', (connection) => {
   //recieving message from client side.
   connection.on('message', ((message) => {
     const clientMessage = JSON.parse(message);
+    //checking if incoming data from client app is a message.
     if(clientMessage[0].type === 'postMessage'){
-      console.log(clientMessage);
-      console.log(uuidv4());
-
       //setting new message to send to clients, given new ID using UUID and type is changed.
       outgoingData = [{
         content:clientMessage[0].content,
@@ -53,7 +48,6 @@ wss.on('connection', (connection) => {
         id: uuidv4(),
         type:'incomingMessage'
       }]
-      console.log('test', outgoingData);
 
       //websockets keeps track of clients connected automatically, sending message to all.
       //why not work if outside?
@@ -61,7 +55,7 @@ wss.on('connection', (connection) => {
         client.send(JSON.stringify(outgoingData),() => {
           console.log('message sent to client');
         });
-      })
+      }) //checks if incoming data is a notification.
     } else if(clientMessage[0].type === 'postNotification'){
         outgoingData = [{
           content:clientMessage[0].content,
@@ -70,20 +64,15 @@ wss.on('connection', (connection) => {
           type:'incomingNotification'
         }]
 
-        console.log('test', outgoingData);
         wss.clients.forEach(function each(client) {
           client.send(JSON.stringify(outgoingData),() => {
             console.log('message sent to client');
           });
         })
-    }
-
-
-
+      }
   }));
 
-
-
+  //when a connection closes, the number of users online are resent to the connected clients.
   connection.on('close', () => {
     console.log('Client Disconnected');
     outgoingData = [{

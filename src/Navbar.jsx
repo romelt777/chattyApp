@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 class Navbar extends Component{
+  //navbar using props from the app component to display how many users are currently online.
   render(){
     return (
       <nav className='navbar'>
@@ -9,9 +10,6 @@ class Navbar extends Component{
       </nav>
     );
   }
-
-
 }
-
 
 export default Navbar;
