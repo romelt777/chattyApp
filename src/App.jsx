@@ -97,16 +97,19 @@ class App extends Component {
       this.state.socket.send(JSON.stringify(newNotification));
     }
 
-    //creating new message array, with newly inputed data. Created an array with an object.
-    const newMessage = [{
-      type: "postMessage",
-      content: `${message}`,
-      username: `${this.state.currentUser.name}`,
-    }];
+    //added a timeout on the sending a message, because sometimes, maybe 33% notification comes after message
+    setTimeout(() => {
+      //creating new message array, with newly inputed data. Created an array with an object.
+      const newMessage = [{
+        type: "postMessage",
+        content: `${message}`,
+        username: `${this.state.currentUser.name}`,
+      }];
 
-    //sending message to websocket server .
-    const serverMessage = JSON.stringify(newMessage);
-    this.state.socket.send(serverMessage);
+      //sending message to websocket server .
+      const serverMessage = JSON.stringify(newMessage);
+      this.state.socket.send(serverMessage);
+    }, 50)
 
     //updating the state of last username used to sent a message. also how many messages this client has sent.
     const messageCount = (this.state.sentMessages + 1 );
