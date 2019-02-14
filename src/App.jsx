@@ -54,8 +54,11 @@ class App extends Component {
 
   //current user in the state, is changed on every key stroke. this is the method called by <ChatBar />
   setUser(user){
-    this.setState({currentUser: {name: `${user}`} }, () => {
-    });
+    if(user === ''){
+      this.setState({currentUser: {name: `Anonymous`} });
+    } else {
+      this.setState({currentUser: {name: `${user}`} });
+    }
   }
 
   //checking whether entered url is an image/gif/jpeg ..etc.
