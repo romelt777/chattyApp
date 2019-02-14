@@ -30,7 +30,11 @@ node server.js
 
 ### Photos of Project
 
-
+[username](https://github.com/romelt777/chattyApp/blob/master/docs/changing_username.png)
+[username](https://github.com/romelt777/chattyApp/blob/master/docs/changing_username2.png)
+[username](https://github.com/romelt777/chattyApp/blob/master/docs/display_gif.png)
+[username](https://github.com/romelt777/chattyApp/blob/master/docs/display_photo.png)
+[username](https://github.com/romelt777/chattyApp/blob/master/docs/users_disconnecting.png)
 
 
 
