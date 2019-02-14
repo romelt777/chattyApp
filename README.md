@@ -1,6 +1,9 @@
 Chatty App
 =====================
 
+[Link to ChattyServer Repo](https://github.com/romelt777/chattyServer)
+
+
 Single page real time chat app which uses React, Babel, Webpack and WebSockets. Users able to instant message to other users connected to the local host.
 
 ### Dependencies
@@ -19,13 +22,6 @@ Install the dependencies and start the Chatty App.
 npm install
 npm start
 open http://localhost:3000
-```
-
-Install the dependencies of the Chatty WebSocket Server in another directory.
-
-```
-npm install
-node server.js
 ```
 
 ### Photos of Project
