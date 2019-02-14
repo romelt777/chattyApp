@@ -13,7 +13,7 @@ Single page real time chat app which uses React, Babel, Webpack and WebSockets. 
 
 ### Usage
 
-Install the dependencies and start the Chatty App.
+Install the dependencies and start the Chatty pp.
 
 ```
 npm install
