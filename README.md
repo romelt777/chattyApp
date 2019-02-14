@@ -32,16 +32,16 @@ node server.js
 
 - User changing username
 ![](https://github.com/romelt777/chattyApp/blob/master/docs/changing_username.png)
-<br />
+
 - Another user changing a username
 ![](https://github.com/romelt777/chattyApp/blob/master/docs/changing_username2.png)
-<br />
+
 - Message containing gif
 ![](https://github.com/romelt777/chattyApp/blob/master/docs/display_gif.png)
-<br />
+
 - Message containing photo
 ![](https://github.com/romelt777/chattyApp/blob/master/docs/display_photo.png)
-<br />
+
 - Users disconnected
 ![](https://github.com/romelt777/chattyApp/blob/master/docs/users_disconnecting.png)
 
