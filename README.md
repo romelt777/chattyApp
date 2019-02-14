@@ -24,6 +24,12 @@ npm start
 open http://localhost:3000
 ```
 
+Server must also be on for ChattyApp to work.
+
+[Click here for server Repo](https://github.com/romelt777/chattyServer)
+
+
+
 ### Photos of Project
 
 - User changing username
