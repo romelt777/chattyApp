@@ -39,13 +39,13 @@ Server must also be on for ChattyApp to work.
 ![](https://github.com/romelt777/chattyApp/blob/master/docs/newChangeUsername2.png)
 
 - Message containing gif
-![](https://github.com/romelt777/chattyApp/blob/master/docs/newMessageGif.png)
+![](https://github.com/romelt777/chattyApp/blob/master/docs/lastGif.png)
 
 - Message containing photo
-![](https://github.com/romelt777/chattyApp/blob/master/docs/newMessagePic.png)
+![](https://github.com/romelt777/chattyApp/blob/master/docs/lastPic.png)
 
 - Users disconnected
-![](https://github.com/romelt777/chattyApp/blob/master/docs/usersDIsconnect.png)
+![](https://github.com/romelt777/chattyApp/blob/master/docs/lastDisconnect.png)
 
 
 
